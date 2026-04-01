@@ -82,9 +82,12 @@ class ServiceController
         try { CSRF::verify($_POST['_csrf_token'] ?? ''); }
         catch (\RuntimeException) { $this->jsonError('Invalid CSRF token.', 403); return; }
 
+        $allowed = ['Design', 'Tech', 'Writing', 'Photography', 'Tutoring', 'Home Services', 'Music', 'Other'];
+
         $v = new Validator($_POST);
         $v->required('title')->max('title', 150)
           ->required('description')->max('description', 1000)
+          ->required('category')->in('category', $allowed)
           ->required('credits')->integer('credits')->range('credits', 1, 500);
 
         if ($v->fails()) {

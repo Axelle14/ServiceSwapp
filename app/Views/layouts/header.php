@@ -53,6 +53,26 @@ function nav_active(string $check, string $path): string { return $path === $che
       <a href="<?= $base ?>/register" class="btn-primary-sm">Join Free</a>
     <?php endif; ?>
   </div>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="<?= $base ?>/services">Browse</a>
+    <?php if ($loggedIn): ?>
+    <a href="<?= $base ?>/dashboard">Dashboard</a>
+    <a href="<?= $base ?>/messages">Messages</a>
+    <a href="<?= $base ?>/subscriptions">Plans</a>
+    <a href="<?= $base ?>/profile">My Profile</a>
+    <hr>
+    <form method="POST" action="<?= $base ?>/logout" style="padding:0">
+      <input type="hidden" name="_csrf_token" value="<?= Validator::e($csrf) ?>">
+      <button type="submit">Sign Out</button>
+    </form>
+    <?php else: ?>
+    <a href="<?= $base ?>/login">Log In</a>
+    <a href="<?= $base ?>/register">Join Free</a>
+    <?php endif; ?>
+  </div>
 </nav>
 <?php $fe = \App\Core\Session::getFlash('error'); $fs = \App\Core\Session::getFlash('success'); ?>
 <?php if ($fe): ?><div class="flash flash-error"><span><?= Validator::e($fe) ?></span><button onclick="this.parentElement.remove()">✕</button></div><?php endif; ?>

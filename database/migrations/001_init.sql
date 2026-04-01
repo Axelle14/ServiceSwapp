@@ -8,13 +8,6 @@ SET NAMES utf8mb4;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 
--- ── Database ──────────────────────────────────────────────
-CREATE DATABASE IF NOT EXISTS `skillswap`
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
-
-USE `skillswap`;
-
 -- ── Users ─────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS `users` (
     `id`                INT UNSIGNED     NOT NULL AUTO_INCREMENT,
@@ -173,11 +166,6 @@ CREATE TABLE IF NOT EXISTS `rate_limits` (
     PRIMARY KEY (`id`),
     KEY `idx_key_time` (`key_name`, `created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ── Event: auto-clean rate_limits daily ───────────────────
-CREATE EVENT IF NOT EXISTS `evt_clean_rate_limits`
-ON SCHEDULE EVERY 1 DAY
-DO DELETE FROM rate_limits WHERE created_at < UNIX_TIMESTAMP() - 86400;
 
 SET foreign_key_checks = 1;
 

@@ -45,10 +45,12 @@ class Auth
     public static function login(array $user): void
     {
         session_regenerate_id(true); // prevent session fixation
-        Session::set('user_id',    (int)$user['id']);
-        Session::set('user_email', $user['email']);
-        Session::set('user_name',  $user['full_name']);
-        Session::set('user_role',  $user['role']);
+        Session::set('user_id',      (int)$user['id']);
+        Session::set('user_email',   $user['email']);
+        Session::set('user_name',    $user['full_name']);
+        Session::set('user_role',    $user['role']);
+        Session::set('user_credits', (int)$user['credits']);
+        Session::set('user_plan',    $user['subscription_plan']);
     }
 
     public static function logout(): void

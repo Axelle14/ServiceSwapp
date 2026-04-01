@@ -29,7 +29,7 @@ class ServiceModel extends BaseModel
             'UPDATE services SET title=?, description=?, category=?, credits=?, updated_at=NOW()
              WHERE id=? AND user_id=?'
         );
-        return $stmt->execute([
+        $stmt->execute([
             $data['title'],
             $data['description'],
             $data['category'],
@@ -37,12 +37,14 @@ class ServiceModel extends BaseModel
             $serviceId,
             $userId,
         ]);
+        return $stmt->rowCount() > 0;
     }
 
     public function deleteOwned(int $serviceId, int $userId): bool
     {
         $stmt = $this->db->prepare('DELETE FROM services WHERE id=? AND user_id=?');
-        return $stmt->execute([$serviceId, $userId]);
+        $stmt->execute([$serviceId, $userId]);
+        return $stmt->rowCount() > 0;
     }
 
     public function browse(string $search = '', string $category = '', int $limit = 12, int $offset = 0): array

@@ -34,13 +34,16 @@ function showToast(msg, type = 'success') {
 }
 
 /* ── Modal helpers ────────────────────────────────────────── */
-function openModal(id)  { document.getElementById('modal-' + id)?.classList.add('open'); }
+function openModal(id) { document.getElementById('modal-' + id)?.classList.add('open'); }
 function closeModal(id) { document.getElementById('modal-' + id)?.classList.remove('open'); }
 
 // Close modal on overlay click
 document.addEventListener('click', e => {
   if (e.target.classList.contains('modal-overlay')) {
     e.target.classList.remove('open');
+  }
+  if (!e.target.closest('.main-nav')) {
+    closeMobileNav();
   }
 });
 // Close modal on Escape
@@ -50,6 +53,20 @@ document.addEventListener('keydown', e => {
     closeUserMenu();
   }
 });
+
+/* ── Mobile nav ───────────────────────────────────────────── */
+function toggleMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.getElementById('navHamburger');
+  if (!nav) return;
+  nav.classList.toggle('open');
+  btn?.classList.toggle('open');
+}
+
+function closeMobileNav() {
+  document.getElementById('mobileNav')?.classList.remove('open');
+  document.getElementById('navHamburger')?.classList.remove('open');
+}
 
 /* ── User menu dropdown ───────────────────────────────────── */
 function toggleUserMenu() {
@@ -66,16 +83,16 @@ document.addEventListener('click', e => {
 function openRequestModal(serviceId, title, credits) {
   const el = document.getElementById('modal-request');
   if (!el) return;
-  el.querySelector('#reqServiceId').value  = serviceId;
-  el.querySelector('#reqModalTitle').textContent  = `Request "${title}"`;
+  el.querySelector('#reqServiceId').value = serviceId;
+  el.querySelector('#reqModalTitle').textContent = `Request "${title}"`;
   el.querySelector('#reqModalCredits').textContent = credits + ' credits will be held in escrow';
   openModal('request');
 }
 
 async function submitRequest() {
   const serviceId = document.getElementById('reqServiceId').value;
-  const message   = document.getElementById('reqMessage').value.trim();
-  const btn       = document.getElementById('reqSubmitBtn');
+  const message = document.getElementById('reqMessage').value.trim();
+  const btn = document.getElementById('reqSubmitBtn');
 
   if (!message) { showToast('Please write a message to the provider.', 'error'); return; }
 
@@ -118,10 +135,10 @@ function openReviewModal(swapId) {
 }
 
 async function submitReview() {
-  const swapId  = document.getElementById('reviewSwapId').value;
-  const rating  = document.getElementById('reviewRating').value;
+  const swapId = document.getElementById('reviewSwapId').value;
+  const rating = document.getElementById('reviewRating').value;
   const comment = document.getElementById('reviewComment').value.trim();
-  const btn     = document.getElementById('reviewSubmitBtn');
+  const btn = document.getElementById('reviewSubmitBtn');
 
   if (!comment) { showToast('Please write a review comment.', 'error'); return; }
 
@@ -142,10 +159,10 @@ async function submitReview() {
 async function submitService(e) {
   e.preventDefault();
   const form = e.target;
-  const btn  = form.querySelector('[type="submit"]');
+  const btn = form.querySelector('[type="submit"]');
   const data = Object.fromEntries(new FormData(form));
   const editId = form.dataset.editId;
-  const url  = editId ? `/services/${editId}/edit` : '/services';
+  const url = editId ? `/services/${editId}/edit` : '/services';
 
   btn.disabled = true; btn.textContent = 'Saving…';
   const res = await api(url, data);
@@ -170,9 +187,9 @@ async function deleteService(serviceId) {
 
 /* ── Messaging ────────────────────────────────────────────── */
 async function sendMessage() {
-  const input  = document.getElementById('chatInput');
+  const input = document.getElementById('chatInput');
   const swapId = document.getElementById('chatSwapId')?.value;
-  const text   = input?.value.trim();
+  const text = input?.value.trim();
   if (!text || !swapId) return;
 
   const res = await api('/messages/send', { swap_id: swapId, body: text });
@@ -188,7 +205,7 @@ function appendMessage(text, date) {
   const box = document.getElementById('chatMessages');
   if (!box) return;
   const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const div  = document.createElement('div');
+  const div = document.createElement('div');
   div.className = 'msg me';
   div.innerHTML = `<div class="msg-bubble">${escHtml(text)}</div><div class="msg-time">${time}</div>`;
   box.appendChild(div);
@@ -206,7 +223,7 @@ document.addEventListener('keydown', e => {
 async function updateProfile(e) {
   e.preventDefault();
   const form = e.target;
-  const btn  = form.querySelector('[type="submit"]');
+  const btn = form.querySelector('[type="submit"]');
   btn.disabled = true; btn.textContent = 'Saving…';
 
   // Traditional form submit for profile (uses flash messages)
@@ -222,11 +239,11 @@ function setCategory(cat, el) {
 
 function updateBrowseURL() {
   const cat = document.querySelector('.chip.active')?.dataset.cat ?? '';
-  const q   = document.getElementById('searchInput')?.value ?? '';
+  const q = document.getElementById('searchInput')?.value ?? '';
   const params = new URLSearchParams();
-  if (q)   params.set('q', q);
+  if (q) params.set('q', q);
   if (cat) params.set('category', cat);
-  const url = '/services' + (params.toString() ? '?' + params : '');
+  const url = appBase() + '/services' + (params.toString() ? '?' + params : '');
   window.location.href = url;
 }
 
@@ -239,24 +256,32 @@ function onSearch() {
 /* ── Star rating UI ───────────────────────────────────────── */
 function initStarRating(containerId, inputId) {
   const container = document.getElementById(containerId);
-  const input     = document.getElementById(inputId);
+  const input = document.getElementById(inputId);
   if (!container || !input) return;
 
-  container.querySelectorAll('.star').forEach(star => {
+  const stars = container.querySelectorAll('.star');
+
+  function highlight(upTo) {
+    stars.forEach(s => {
+      s.style.color = parseInt(s.dataset.val) <= upTo ? 'var(--caramel)' : 'var(--light)';
+    });
+  }
+
+  stars.forEach(star => {
+    star.addEventListener('mouseover', () => highlight(parseInt(star.dataset.val)));
     star.addEventListener('click', () => {
-      const val = star.dataset.val;
-      input.value = val;
-      container.querySelectorAll('.star').forEach(s => {
-        s.classList.toggle('active', parseInt(s.dataset.val) <= parseInt(val));
-      });
+      input.value = star.dataset.val;
+      highlight(parseInt(star.dataset.val));
     });
   });
+
+  container.addEventListener('mouseleave', () => highlight(parseInt(input.value) || 0));
 }
 
 /* ── Util ─────────────────────────────────────────────────── */
 function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-            .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 /* ── Init on load ─────────────────────────────────────────── */

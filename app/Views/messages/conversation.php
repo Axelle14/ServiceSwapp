@@ -97,44 +97,5 @@ require APP_ROOT . '/app/Views/layouts/header.php';
   </div>
 </div>
 
-<!-- Review Modal -->
-<div class="modal-overlay" id="modal-review">
-  <div class="modal">
-    <h2 class="modal-title">Leave a Review</h2>
-    <p class="modal-sub">Rate your experience</p>
-    <input type="hidden" id="reviewSwapId" value="<?= (int)$swap['id'] ?>">
-    <div class="form-group">
-      <label>Rating</label>
-      <div id="starContainer" style="display:flex;gap:8px;font-size:28px;cursor:pointer">
-        <?php for ($i = 1; $i <= 5; $i++): ?>
-          <span class="star" data-val="<?= $i ?>" style="color:var(--light)">★</span>
-        <?php endfor; ?>
-      </div>
-      <input type="hidden" id="reviewRating" value="5">
-    </div>
-    <div class="form-group">
-      <label>Comment</label>
-      <textarea id="reviewComment" rows="3" placeholder="How was the experience?"></textarea>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('review')">Cancel</button>
-      <button class="btn btn-primary" id="reviewSubmitBtn" onclick="submitReview()">Submit</button>
-    </div>
-  </div>
-</div>
-
-<script>
-document.querySelectorAll('.star').forEach(star => {
-  star.addEventListener('mouseover', () => {
-    const v = parseInt(star.dataset.val);
-    document.querySelectorAll('.star').forEach(s => s.style.color = parseInt(s.dataset.val) <= v ? 'var(--caramel)' : 'var(--light)');
-  });
-  star.addEventListener('click', () => { document.getElementById('reviewRating').value = star.dataset.val; });
-});
-document.getElementById('starContainer')?.addEventListener('mouseleave', () => {
-  const v = parseInt(document.getElementById('reviewRating').value);
-  document.querySelectorAll('.star').forEach(s => s.style.color = parseInt(s.dataset.val) <= v ? 'var(--caramel)' : 'var(--light)');
-});
-</script>
-
+<?php require APP_ROOT . '/app/Views/partials/modal_review.php'; ?>
 <?php require APP_ROOT . '/app/Views/layouts/footer.php'; ?>
