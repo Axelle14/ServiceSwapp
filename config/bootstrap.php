@@ -7,7 +7,7 @@ use App\Core\{Env, Session};
 Env::load(APP_ROOT . '/.env');
 
 // Base path — auto-detects sub-folder (e.g. /skillswap/public) or root ('')
-define('APP_BASE', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'));
+define('APP_BASE', '/public');
 
 // Error reporting
 if (Env::get('APP_DEBUG', 'false') === 'true') {
