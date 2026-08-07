@@ -20,15 +20,34 @@ class Router
 
     public function dispatch(string $method, string $uri): void
     {
-        // Strip query string
+        // Remove query string
         $uri = parse_url($uri, PHP_URL_PATH) ?? '/';
 
-        // Azure serves the app through /index.php
-        if ($uri === '/index.php') {
-            $uri = '/';
+        // --------------------------------------------------
+        // Azure / Nginx compatibility
+        //
+        // Supports both:
+        //   /
+        //   /login
+        //   /register
+        //   /services
+        //
+        // and
+        //
+        //   /index.php
+        //   /index.php/login
+        //   /index.php/register
+        //   /index.php/services
+        // --------------------------------------------------
+        if (str_starts_with($uri, '/index.php')) {
+            $uri = substr($uri, strlen('/index.php'));
+
+            if ($uri === '') {
+                $uri = '/';
+            }
         }
 
-        // Remove trailing slash (except root)
+        // Remove trailing slash except for root
         if ($uri !== '/') {
             $uri = rtrim($uri, '/');
         }
