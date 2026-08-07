@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 
 // On InfinityFree (and most shared hosts), FTP root IS htdocs.
 // Everything lives inside htdocs/, so APP_ROOT = this file's directory.
-define('APP_ROOT', __DIR__);
+define('APP_ROOT', dirname(__DIR__));
 
 // Autoloader
 spl_autoload_register(function (string $class): void {
