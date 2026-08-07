@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap User Manual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #48566b;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        h4 {
+            color: #5a6c7d;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .toc {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .toc ul {
+            margin-left: 20px;
+        }
+        
+        .section {
+            page-break-inside: avoid;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #ecf0f1;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+        
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .cross {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .flow-diagram {
+            background-color: #f0f8ff;
+            border: 2px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .faq-item strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #2980b9;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #bdc3c7;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 20px;
+            }
+            h1, h2 {
+                page-break-after: avoid;
+            }
+            p, ul, ol {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SkillSwap User Manual</h1>
+        <p style="font-size: 1.1em; color: #7f8c8d; margin-bottom: 30px;">Welcome to <strong>SkillSwap</strong>, a skill-exchange marketplace where you can trade services using credits instead of money. This guide will help you get started and make the most of the platform.</p>
+        
+        <div class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#understanding-credits">Understanding Credits</a></li>
+                <li><a href="#your-dashboard">Your Dashboard</a></li>
+                <li><a href="#managing-your-profile">Managing Your Profile</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#creating-managing-swaps">Creating and Managing Swaps</a></li>
+                <li><a href="#messaging">Messaging</a></li>
+                <li><a href="#subscriptions">Subscriptions</a></li>
+                <li><a href="#faq">FAQ & Troubleshooting</a></li>
+                <li><a href="#tips">Tips for Success</a></li>
+            </ul>
+        </div>
+        
+        <div class="section" id="getting-started">
+            <h2>Getting Started</h2>
+            
+            <h3>Creating an Account</h3>
+            <ol>
+                <li>Click the <strong>Sign Up</strong> button on the homepage</li>
+                <li>Fill in the registration form:
+                    <ul>
+                        <li><strong>Full Name</strong>: Your complete name</li>
+                        <li><strong>Email</strong>: A valid email address (used for login)</li>
+                        <li><strong>Password</strong>: Create a strong password</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Create Account</strong></li>
+                <li>You'll be logged in automatically and receive <strong>50 starter credits</strong> to begin trading</li>
+            </ol>
+            
+            <h3>Logging In</h3>
+            <ol>
+                <li>Click the <strong>Login</strong> button</li>
+                <li>Enter your email and password</li>
+                <li>Click <strong>Sign In</strong></li>
+                <li>You'll be redirected to your dashboard</li>
+            </ol>
+            
+            <h3>Logging Out</h3>
+            <ul>
+                <li>Click your profile icon in the top-right corner of the page</li>
+                <li>Select <strong>Logout</strong></li>
+            </ul>
+        </div>
+        
+        <div class="section" id="understanding-credits">
+            <h2>Understanding Credits</h2>
+            
+            <p>Credits are the virtual currency of SkillSwap. Here's what you need to know:</p>
+            
+            <h3>Credit Basics</h3>
+            <ul>
+                <li><strong>Starting Balance</strong>: Every new user begins with 50 credits</li>
+                <li><strong>Cost of Services</strong>: Services have different credit costs depending on their complexity</li>
+                <li><strong>No Money Involved</strong>: Credits are earned by providing services and spent by requesting them</li>
+                <li><strong>Fair Exchange</strong>: The credit system ensures a balanced, fair marketplace</li>
+            </ul>
+            
+            <h3>Credit Flow</h3>
+            <ol>
+                <li><strong>Request a Service</strong>: You spend credits (they are locked in escrow)</li>
+                <li><strong>Service Provider Accepts</strong>: The swap begins</li>
+                <li><strong>Service is Completed</strong>: You confirm the work is done</li>
+                <li><strong>Credits Released</strong>: The service provider receives the credits</li>
+                <li><strong>Service Provider Provides Service</strong>: They spend credits (locked in escrow)</li>
+            </ol>
+            
+            <h3>Viewing Your Credit Balance</h3>
+            <p>Your current credit balance is displayed in the <strong>top-right corner</strong> of every page next to the credit icon (💰). You'll also see a detailed breakdown on your <strong>Dashboard</strong>.</p>
+        </div>
+        
+        <div class="section" id="your-dashboard">
+            <h2>Your Dashboard</h2>
+            
+            <p>The Dashboard is your home base on SkillSwap.</p>
+            
+            <h3>Accessing Your Dashboard</h3>
+            <ol>
+                <li>After logging in, you'll automatically go to your Dashboard</li>
+                <li>Or, click the <strong>Dashboard</strong> link in the main navigation</li>
+            </ol>
+            
+            <h3>Dashboard Sections</h3>
+            
+            <h4>Credit Information</h4>
+            <ul>
+                <li>View your total available credits</li>
+                <li>See a history of recent credit transactions</li>
+            </ul>
+            
+            <h4>Quick Stats</h4>
+            <ul>
+                <li>Active swaps in progress</li>
+                <li>Pending swap requests (waiting for your response)</li>
+                <li>Average rating you've received from other users</li>
+            </ul>
+            
+            <h4>Recent Activity</h4>
+            <ul>
+                <li>Your most recent swaps</li>
+                <li>New messages waiting for your response</li>
+                <li>Services you've listed</li>
+            </ul>
+            
+            <h4>Quick Actions</h4>
+            <ul>
+                <li>Browse Services (shortcut to the services marketplace)</li>
+                <li>Add a New Service (quickly list a new service you can provide)</li>
+                <li>View Your Services (manage existing services)</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="managing-your-profile">
+            <h2>Managing Your Profile</h2>
+            
+            <h3>Accessing Your Profile</h3>
+            <ol>
+                <li>Click the <strong>Profile</strong> link in the main navigation</li>
+                <li>Or click your name in the top-right corner → <strong>View Profile</strong></li>
+            </ol>
+            
+            <h3>Editing Your Profile</h3>
+            <ol>
+                <li>On your profile page, click the <strong>Edit Profile</strong> button</li>
+                <li>Update your information:
+                    <ul>
+                        <li><strong>Full Name</strong>: Your display name</li>
+                        <li><strong>Email</strong>: Your login email</li>
+                        <li><strong>Bio/About</strong>: Tell other users about your skills and expertise</li>
+                        <li><strong>Availability</strong>: When you're available to provide services</li>
+                        <li><strong>Current Plan</strong>: Shows your subscription status</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Save Changes</strong></li>
+            </ol>
+            
+            <h3>Profile Information Visible to Others</h3>
+            <p>Other users can see:</p>
+            <ul>
+                <li>Your full name</li>
+                <li>Your average rating (based on reviews)</li>
+                <li>Number of completed swaps</li>
+                <li>Your listed services</li>
+                <li>Your profile bio</li>
+            </ul>
+            
+            <p>Your email, password, and credit details are private and only visible to you.</p>
+        </div>
+        
+        <div class="section" id="services">
+            <h2>Services</h2>
+            
+            <h3>Browsing Services</h3>
+            
+            <h4>Finding Services</h4>
+            <ol>
+                <li>Click <strong>Browse Services</strong> in the main navigation</li>
+                <li>You're now viewing all available services</li>
+            </ol>
+            
+            <h4>Filtering and Searching</h4>
+            <ul>
+                <li><strong>By Category</strong>: Look for category filters (e.g., Design, Writing, Programming)</li>
+                <li><strong>By Credit Cost</strong>: Filter services within your credit budget</li>
+                <li><strong>Search</strong>: Use the search box to find specific skills or service names</li>
+            </ul>
+            
+            <h4>Viewing Service Details</h4>
+            <ol>
+                <li>Click on any service card to view full details</li>
+                <li>You'll see:
+                    <ul>
+                        <li><strong>Service Title & Description</strong>: What the service includes</li>
+                        <li><strong>Credit Cost</strong>: How many credits the service costs</li>
+                        <li><strong>Provider Info</strong>: Name and rating of the service provider</li>
+                        <li><strong>Provider's Other Services</strong>: See what else they offer</li>
+                        <li><strong>Request This Service</strong>: Button to start a swap</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <h3>Adding Your Services</h3>
+            
+            <h4>Create a New Service</h4>
+            <ol>
+                <li>Click <strong>Add Service</strong> (usually available via a button on your profile or dashboard)</li>
+                <li>Fill in the service details:
+                    <ul>
+                        <li><strong>Service Title</strong>: A clear, descriptive name (e.g., "Logo Design", "CV Writing", "Basic HTML Coding")</li>
+                        <li><strong>Description</strong>: Explain what you'll provide, how long it takes, any requirements</li>
+                        <li><strong>Category</strong>: Select the relevant category (e.g., Design, Writing, Tech)</li>
+                        <li><strong>Credit Cost</strong>: Set how many credits this service is worth (e.g., 15, 25, 40)</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Create Service</strong></li>
+            </ol>
+            
+            <h4>Service Listing Guidelines</h4>
+            <ul>
+                <li>Be <strong>specific and clear</strong> about what you're offering</li>
+                <li>Include <strong>realistic timeframes</strong> (e.g., "I'll deliver within 3 business days")</li>
+                <li>List <strong>any requirements</strong> from the person requesting the service</li>
+                <li>Use <strong>honest credit pricing</strong> — compare similar services to price fairly</li>
+            </ul>
+            
+            <h3>Managing Your Services</h3>
+            
+            <h4>View Your Services</h4>
+            <ol>
+                <li>Go to your <strong>Profile</strong> or <strong>Dashboard</strong></li>
+                <li>Click <strong>My Services</strong> or <strong>Your Services</strong></li>
+                <li>See all services you've listed</li>
+            </ol>
+            
+            <h4>Edit a Service</h4>
+            <ol>
+                <li>Find the service in your list</li>
+                <li>Click the <strong>Edit</strong> button</li>
+                <li>Update the details (title, description, price, etc.)</li>
+                <li>Click <strong>Save Changes</strong></li>
+            </ol>
+            
+            <h4>Delete a Service</h4>
+            <ol>
+                <li>Find the service in your list</li>
+                <li>Click the <strong>Delete</strong> button</li>
+                <li>Confirm that you want to delete it</li>
+                <li>The service will be removed (existing swap requests won't be affected)</li>
+            </ol>
+        </div>
+        
+        <div class="section" id="creating-managing-swaps">
+            <h2>Creating and Managing Swaps</h2>
+            
+            <p>A "swap" is a transaction between two users. Here's how they work:</p>
+            
+            <h3>Requesting a Service</h3>
+            
+            <h4>Step 1: Find a Service</h4>
+            <ol>
+                <li>Go to <strong>Browse Services</strong></li>
+                <li>Click on a service you want to request</li>
+                <li>Review the details and the provider's information</li>
+            </ol>
+            
+            <h4>Step 2: Request the Service</h4>
+            <ol>
+                <li>On the service detail page, click <strong>Request This Service</strong></li>
+                <li>You'll see a confirmation dialog:
+                    <ul>
+                        <li>Service title and cost</li>
+                        <li>Provider's name</li>
+                        <li>Your current credit balance (to confirm you have enough)</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Confirm</strong> to proceed</li>
+                <li><strong>Your credits are now locked</strong> — they'll be held in escrow until the swap completes</li>
+            </ol>
+            
+            <h4>Step 3: Wait for Response</h4>
+            <ul>
+                <li>The service provider will receive a notification</li>
+                <li>They must accept or decline your request within a few days</li>
+                <li>If they decline, your credits will be returned immediately</li>
+                <li>You can see the status on your Dashboard</li>
+            </ul>
+            
+            <h3>Responding to Swap Requests</h3>
+            
+            <p>When someone requests your service, you'll receive a notification.</p>
+            
+            <h4>View Pending Requests</h4>
+            <ol>
+                <li>Go to your <strong>Dashboard</strong></li>
+                <li>Look for "Pending Swap Requests" or "New Requests"</li>
+                <li>Click on a request to see details</li>
+            </ol>
+            
+            <h4>Accept a Swap Request</h4>
+            <ol>
+                <li>Click on the swap request</li>
+                <li>Click <strong>Accept</strong> to agree to provide the service</li>
+                <li>The swap officially begins</li>
+                <li>You can now message the requester to discuss details</li>
+            </ol>
+            
+            <h4>Decline a Swap Request</h4>
+            <ol>
+                <li>Click on the swap request</li>
+                <li>Click <strong>Decline</strong> to reject the service request</li>
+                <li>Their credits will be immediately returned</li>
+                <li>Optionally provide a reason (e.g., "I'm too busy", "Outside my expertise")</li>
+            </ol>
+            
+            <h3>Completing a Swap</h3>
+            
+            <h4>For Service Providers</h4>
+            <ol>
+                <li>Once you've accepted a swap, <strong>provide the service</strong> to the requester</li>
+                <li>You can communicate via the built-in messaging system attached to the swap</li>
+                <li>Deliver the work (files, completed task, etc.) according to what was agreed</li>
+                <li>Mark the swap as <strong>"Delivered"</strong> in the system</li>
+                <li>Wait for the requester to confirm completion</li>
+            </ol>
+            
+            <h4>For Service Requesters</h4>
+            <ol>
+                <li>Monitor the <strong>Messages</strong> section for your swap</li>
+                <li>Review the work delivered by the provider</li>
+                <li>If satisfied, click <strong>Confirm Completion</strong></li>
+                <li>The service provider's credits are now released</li>
+                <li>You're prompted to leave a review</li>
+            </ol>
+            
+            <h4>If There's a Problem</h4>
+            <ul>
+                <li><strong>Use Messaging</strong>: Talk to the other person through the built-in chat</li>
+                <li><strong>Request Changes</strong>: If the work isn't quite right, you can request revisions</li>
+                <li><strong>Report a Dispute</strong>: If you can't reach agreement, use the dispute system to escalate</li>
+            </ul>
+            
+            <h3>Reviewing Services</h3>
+            
+            <p>After a swap completes, you can review the service provider (and they can review you).</p>
+            
+            <h4>Leaving a Review</h4>
+            <ol>
+                <li>After confirming completion, you'll see a <strong>"Leave a Review"</strong> prompt</li>
+                <li>Provide:
+                    <ul>
+                        <li><strong>Star Rating</strong>: 1-5 stars (5 = excellent, 1 = poor)</li>
+                        <li><strong>Written Comment</strong>: Share your experience (250 characters max)</li>
+                        <li><strong>Recommend to Others</strong>: Indicate if you'd work with them again</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Submit Review</strong></li>
+            </ol>
+            
+            <h4>Professional Review Tips</h4>
+            <ul>
+                <li>Be <strong>honest and fair</strong> in your ratings</li>
+                <li>Provide <strong>specific feedback</strong> (e.g., what went well, what could improve)</li>
+                <li>Be <strong>respectful</strong> — even if you're dissatisfied, avoid rude language</li>
+                <li>Remember: Providers read these and use them to improve</li>
+            </ul>
+            
+            <h4>Viewing Reviews</h4>
+            <ul>
+                <li>Check a user's <strong>average rating</strong> on their profile</li>
+                <li>Read <strong>specific reviews</strong> left by past clients</li>
+                <li>Use review history to decide if you want to work with someone</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="messaging">
+            <h2>Messaging</h2>
+            
+            <p>SkillSwap has a built-in messaging system for communication during swaps.</p>
+            
+            <h3>Accessing Messages</h3>
+            <ol>
+                <li>Click <strong>Messages</strong> in the main navigation</li>
+                <li>You'll see your message inbox with active conversations</li>
+            </ol>
+            
+            <h3>Starting a Conversation</h3>
+            <ol>
+                <li>When you create or accept a swap, a message thread automatically opens</li>
+                <li>Click the conversation to open the chat</li>
+            </ol>
+            
+            <h3>Sending Messages</h3>
+            <ol>
+                <li>Open a swap's message thread</li>
+                <li>Type your message in the text box at the bottom</li>
+                <li>Click <strong>Send</strong> or press Enter</li>
+                <li>Your message appears immediately</li>
+            </ol>
+            
+            <h3>Message Features</h3>
+            <ul>
+                <li><strong>Real-time notifications</strong>: You'll be notified of new messages</li>
+                <li><strong>Message history</strong>: All conversations are saved</li>
+                <li><strong>Linked to swaps</strong>: Each message thread is tied to a specific service swap</li>
+            </ul>
+            
+            <h3>Communication Best Practices</h3>
+            <ul>
+                <li><strong>Be professional and courteous</strong></li>
+                <li><strong>Respond within 24 hours</strong> when possible</li>
+                <li><strong>Ask clarifying questions</strong> before starting work</li>
+                <li><strong>Confirm deadlines and requirements</strong></li>
+                <li><strong>Provide updates</strong> on progress</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="subscriptions">
+            <h2>Subscriptions</h2>
+            
+            <p>SkillSwap offers different subscription plans to enhance your experience.</p>
+            
+            <h3>Current Plans</h3>
+            
+            <h4>Free Plan</h4>
+            <ul>
+                <li><strong>Cost</strong>: No cost</li>
+                <li><strong>Benefits</strong>:
+                    <ul>
+                        <li>Browse and list services</li>
+                        <li>Create and complete swaps</li>
+                        <li>Basic messaging</li>
+                        <li>Standard rating system</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h4>Premium Plan</h4>
+            <ul>
+                <li><strong>Cost</strong>: Premium membership pricing</li>
+                <li><strong>Benefits</strong>:
+                    <ul>
+                        <li>Everything in Free plan, plus:</li>
+                        <li>Advanced service filtering</li>
+                        <li>Priority customer support</li>
+                        <li>Service promotion features</li>
+                        <li>Analytics dashboard</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h4>Pro Plan</h4>
+            <ul>
+                <li><strong>Cost</strong>: Pro membership pricing</li>
+                <li><strong>Benefits</strong>:
+                    <ul>
+                        <li>Everything in Premium plan, plus:</li>
+                        <li>Unlimited service listings</li>
+                        <li>Featured service placement</li>
+                        <li>Advanced analytics and insights</li>
+                        <li>Dedicated support contact</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h3>Upgrading Your Subscription</h3>
+            <ol>
+                <li>Click <strong>Subscriptions</strong> in the main navigation</li>
+                <li>Review the available plans and their features</li>
+                <li>Click <strong>Upgrade</strong> on your chosen plan</li>
+                <li>Follow the checkout process</li>
+                <li>Your plan will be immediately activated</li>
+            </ol>
+            
+            <h3>Managing Your Subscription</h3>
+            <ol>
+                <li>Go to <strong>Subscriptions</strong> or <strong>Account Settings</strong></li>
+                <li>View your current plan and benefits</li>
+                <li>Upgrade, downgrade, or cancel as needed</li>
+            </ol>
+        </div>
+        
+        <div class="section" id="faq">
+            <h2>FAQ & Troubleshooting</h2>
+            
+            <h3>Account & Login</h3>
+            
+            <div class="faq-item">
+                <strong>Q: I forgot my password. How do I reset it?</strong>
+                <p>A: On the login page, look for a "Forgot Password?" link. Enter your email, and you'll receive reset instructions.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Can I change my email address?</strong>
+                <p>A: Yes. Go to your profile, click "Edit Profile," and update your email. Confirm the change via the link sent to your new email.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: What if I see an error message during login?</strong>
+                <p>A: Check that your email is spelled correctly and your password is entered correctly. Passwords are case-sensitive. If you still can't log in, try resetting your password or contact support.</p>
+            </div>
+            
+            <h3>Credits & Transactions</h3>
+            
+            <div class="faq-item">
+                <strong>Q: How many credits do I start with?</strong>
+                <p>A: Every new user receives 50 starter credits upon registration.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: What happens if I don't have enough credits to request a service?</strong>
+                <p>A: You can't request the service until you've earned more credits by providing services to others.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Can I buy credits with real money?</strong>
+                <p>A: Currently, credits are earned only by providing services. No credit purchases are available. (Check back for future features.)</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Can I get a refund of credits?</strong>
+                <p>A: Credits are used for trading services, not transactions that can be reversed. If a swap is declined, your credits are returned. If a swap is disputed, the dispute team will review.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: My credits disappeared. What happened?</strong>
+                <p>A: Check your dashboard for recent swap activity. Your credits may be:<br>
+                • Locked in an active swap<br>
+                • Awaiting a provider's response<br>
+                • Recently transferred to another user</p>
+            </div>
+            
+            <h3>Services</h3>
+            
+            <div class="faq-item">
+                <strong>Q: How much should I charge for my service?</strong>
+                <p>A: Look at similar services in the marketplace to price fairly. Complex or specialized services typically cost more (25-50 credits), while simple tasks cost less (10-20 credits).</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Can I edit my service after listing it?</strong>
+                <p>A: Yes. Go to your profile, find the service, and click "Edit." You can change the title, description, category, and price.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: What if I want to delete a service?</strong>
+                <p>A: You can delete services anytime from your profile. Pending swap requests won't be affected, but no new requests can be made.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Can the same swap request stay if I delete a service?</strong>
+                <p>A: No, the swap request is automatically canceled when you delete the associated service, and credits are returned to the requester.</p>
+            </div>
+            
+            <h3>Swaps & Transactions</h3>
+            
+            <div class="faq-item">
+                <strong>Q: How long do I have to respond to a swap request?</strong>
+                <p>A: It's recommended to respond within 2-3 business days. Unreasonably long delays may affect your rating.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: What if the service provider doesn't deliver on time?</strong>
+                <p>A: Use the messaging system to check on progress. Set clear deadlines before accepting. If there's a real problem, use the dispute system.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Can I cancel a swap I requested?</strong>
+                <p>A: Before the provider accepts, you can cancel and get your credits back. After they accept, you should discuss cancellation with them first.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: What if I'm not satisfied with the service delivered?</strong>
+                <p>A: Message the provider to discuss concerns and request revisions. Most providers are happy to fix issues. If you can't reach agreement, submit a dispute.</p>
+            </div>
+            
+            <h3>Reviews & Rating</h3>
+            
+            <div class="faq-item">
+                <strong>Q: Can I edit or delete a review I left?</strong>
+                <p>A: Reviews are permanent once submitted. Write carefully and be accurate with your rating.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: What if I receive an unfair review?</strong>
+                <p>A: You can't delete it, but you can respond via message or request support review the case if it's clearly inappropriate or false.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: How is my average rating calculated?</strong>
+                <p>A: It's the average of all star ratings you've received from completed swaps.</p>
+            </div>
+            
+            <h3>Messaging</h3>
+            
+            <div class="faq-item">
+                <strong>Q: I didn't receive a message notification. What happened?</strong>
+                <p>A: Check your Messages inbox directly — some notifications may be delayed. Make sure notifications are enabled in your browser settings.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Can I message someone who isn't in a swap with me?</strong>
+                <p>A: The messaging system is currently linked to active swaps only. You can't message arbitrary users.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Can I unsend a message?</strong>
+                <p>A: No, messages are permanent once sent. Be careful with what you send.</p>
+            </div>
+            
+            <h3>Subscriptions</h3>
+            
+            <div class="faq-item">
+                <strong>Q: What's the difference between Free, Premium, and Pro?</strong>
+                <p>A: Free is basic access. Premium adds advanced features and priority support. Pro includes unlimited listings and featured placement. See the Subscriptions page for full details.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Can I change my subscription plan later?</strong>
+                <p>A: Yes, upgrade or downgrade anytime. Changes take effect immediately.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Is my subscription auto-renewing?</strong>
+                <p>A: Check your subscription settings. You can turn off auto-renewal or cancel anytime without penalty.</p>
+            </div>
+            
+            <h3>General Issues</h3>
+            
+            <div class="faq-item">
+                <strong>Q: I received a 404 or 500 error. What should I do?</strong>
+                <p>A: This indicates a technical problem. Try:<br>
+                1. Refresh the page<br>
+                2. Clear your browser cache<br>
+                3. Try a different browser<br>
+                4. Report the error with screenshots if it persists</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: The page is loading slowly. What can I do?</strong>
+                <p>A: Try:<br>
+                1. Refresh the page<br>
+                2. Check your internet connection<br>
+                3. Try again in a different browser<br>
+                4. Check back later if the server is having issues</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>Q: Is my data secure? How is my password stored?</strong>
+                <p>A: SkillSwap uses industry-standard security:<br>
+                • Passwords are hashed with bcrypt (never stored in plain text)<br>
+                • All data is encrypted in transit (HTTPS)<br>
+                • Personal information is never shared with third parties</p>
+            </div>
+        </div>
+        
+        <div class="section" id="tips">
+            <h2>Tips for Success on SkillSwap</h2>
+            
+            <div class="success" style="margin-top: 30px;">
+                <h3 style="margin-top: 0;">✓ Do:</h3>
+                <ul>
+                    <li>Set realistic credit prices for your services</li>
+                    <li>Provide clear, detailed service descriptions</li>
+                    <li>Communicate promptly with swap partners</li>
+                    <li>Deliver high-quality work</li>
+                    <li>Leave honest, constructive reviews</li>
+                    <li>Update your profile regularly</li>
+                </ul>
+            </div>
+            
+            <div class="warning" style="margin-bottom: 30px;">
+                <h3 style="margin-top: 0;">✗ Don't:</h3>
+                <ul>
+                    <li>Under-price your services (value your time!)</li>
+                    <li>Add misleading service descriptions</li>
+                    <li>Ghost swap partners without communication</li>
+                    <li>Leave unfair or vindictive reviews</li>
+                    <li>Accept swaps you can't complete</li>
+                    <li>Spam or harass other users</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Getting Help</h2>
+            
+            <h3>Customer Support</h3>
+            <p>If you encounter issues or have questions not covered in this manual:</p>
+            <ol>
+                <li><strong>Check the FAQ</strong> above first — your issue might be answered there</li>
+                <li><strong>Visit the Help Center</strong> (if available)</li>
+                <li><strong>Contact Support</strong> via the "Contact Us" page or support email</li>
+            </ol>
+            
+            <h3>Reporting Bugs</h3>
+            <p>If you find a technical bug:</p>
+            <ol>
+                <li>Note the page URL where the bug occurred</li>
+                <li>Describe what you did step-by-step</li>
+                <li>Include the error message (if any)</li>
+                <li>Email support with this information</li>
+            </ol>
+        </div>
+        
+        <div class="section">
+            <h2>Thank You!</h2>
+            <p style="font-size: 1.1em;">Welcome to the SkillSwap community. We're excited to have you here. By helping others succeed, you help yourself succeed. Happy swapping!</p>
+            <p><strong>Questions?</strong> Contact our support team or revisit this manual anytime.</p>
+        </div>
+        
+        <div class="footer">
+            <p>SkillSwap | Skill Exchange Marketplace<br>
+            Last Updated: 2026<br>
+            <em>For the best experience, use this manual in a modern web browser and print to PDF using your browser's print function.</em></p>
+        </div>
+    </div>
+</body>
+</html>
