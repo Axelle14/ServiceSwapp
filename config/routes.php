@@ -16,13 +16,13 @@ $router = new Router();
 // ───────────────────────────────────────────────
 // Authentication
 // ───────────────────────────────────────────────
-$router->get('/login',      [AuthController::class, 'showLogin']);
-$router->post('/login',     [AuthController::class, 'login']);
+$router->get('/login',       [AuthController::class, 'showLogin']);
+$router->post('/login',      [AuthController::class, 'login']);
 
-$router->get('/register',   [AuthController::class, 'showRegister']);
-$router->post('/register',  [AuthController::class, 'register']);
+$router->get('/register',    [AuthController::class, 'showRegister']);
+$router->post('/register',   [AuthController::class, 'register']);
 
-$router->post('/logout',    [AuthController::class, 'logout']);
+$router->post('/logout',     [AuthController::class, 'logout']);
 
 // ───────────────────────────────────────────────
 // Home / Browse
@@ -68,31 +68,10 @@ $router->post('/messages/send',        [MessageController::class, 'send']);
 // ───────────────────────────────────────────────
 $router->get('/subscriptions', [DashboardController::class, 'subscriptions']);
 
-// =====================================================
-// DEBUG OUTPUT (TEMPORARY)
-// =====================================================
+// ───────────────────────────────────────────────
+// Dispatch Request
+// ───────────────────────────────────────────────
+$method = $_SERVER['REQUEST_METHOD'];
+$uri    = $_SERVER['REQUEST_URI'];
 
-echo "<pre>";
-
-echo "REQUEST_METHOD : " . ($_SERVER['REQUEST_METHOD'] ?? '') . PHP_EOL;
-echo "REQUEST_URI    : " . ($_SERVER['REQUEST_URI'] ?? '') . PHP_EOL;
-echo "SCRIPT_NAME    : " . ($_SERVER['SCRIPT_NAME'] ?? '') . PHP_EOL;
-echo "PHP_SELF       : " . ($_SERVER['PHP_SELF'] ?? '') . PHP_EOL;
-echo "DOCUMENT_ROOT  : " . ($_SERVER['DOCUMENT_ROOT'] ?? '') . PHP_EOL;
-echo "APP_BASE       : " . (defined('APP_BASE') ? APP_BASE : 'NOT DEFINED') . PHP_EOL;
-
-echo PHP_EOL;
-echo "SERVER VARIABLES" . PHP_EOL;
-echo "==============================" . PHP_EOL;
-
-print_r($_SERVER);
-
-exit;
-
-// =====================================================
-// NORMAL DISPATCH (restore after debugging)
-// =====================================================
-
-// $method = $_SERVER['REQUEST_METHOD'];
-// $uri    = $_SERVER['REQUEST_URI'];
-// $router->dispatch($method, $uri);
+$router->dispatch($method, $uri);

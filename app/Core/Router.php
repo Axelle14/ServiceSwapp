@@ -21,25 +21,41 @@ class Router
     public function dispatch(string $method, string $uri): void
     {
         // Strip query string
-        $uri = strtok($uri, '?');
-        // Strip base path prefix if app is in a sub-folder
-        $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
-        if ($base && str_starts_with($uri, $base)) {
-            $uri = substr($uri, strlen($base));
+        $uri = parse_url($uri, PHP_URL_PATH) ?? '/';
+
+        // Azure serves the app through /index.php
+        if ($uri === '/index.php') {
+            $uri = '/';
         }
-        $uri = '/' . ltrim($uri, '/');
+
+        // Remove trailing slash (except root)
+        if ($uri !== '/') {
+            $uri = rtrim($uri, '/');
+        }
 
         foreach ($this->routes[$method] ?? [] as $pattern => $handler) {
-            $regex = preg_replace('/\/:([^\/]+)/', '/(?P<$1>[^/]+)', $pattern);
+
+            $regex = preg_replace(
+                '/\/:([^\/]+)/',
+                '/(?P<$1>[^\/]+)',
+                $pattern
+            );
+
             $regex = '#^' . $regex . '$#';
 
             if (preg_match($regex, $uri, $matches)) {
-                // Named capture groups = URL params
-                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+
+                $params = array_filter(
+                    $matches,
+                    'is_string',
+                    ARRAY_FILTER_USE_KEY
+                );
 
                 [$class, $action] = $handler;
+
                 $controller = new $class();
                 $controller->$action($params);
+
                 return;
             }
         }
