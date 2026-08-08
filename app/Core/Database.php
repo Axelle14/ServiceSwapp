@@ -33,12 +33,17 @@ class Database
             ];
 
             try {
+                error_log("About to connect");
+
                 self::$instance = new PDO(
                     $dsn,
                     Env::required('DB_USER'),
                     Env::get('DB_PASS', ''),
                     $options
                 );
+
+            error_log("PDO connected successfully");
+            
             } catch (PDOException $e) {
                 // Never expose DB credentials in errors
                 error_log('DB connection failed: ' . $e->getMessage());
