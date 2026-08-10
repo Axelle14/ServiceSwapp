@@ -6,13 +6,10 @@ use App\Core\{Env, Session};
 // Load .env
 Env::load(APP_ROOT . '/.env');
 
-// Base path — auto-detects sub-folder (e.g. /skillswap/public) or root ('')
-$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-$basePath   = rtrim(dirname($scriptName), '/\\');
-if ($basePath === '' || $basePath === '.') {
-    $basePath = '';
-}
-define('APP_BASE', $basePath);
+// Public URL base path.
+// The application is served from the public/ directory,
+// so public/ must never appear in browser URLs.
+define('APP_BASE', '');
 
 // Error reporting
 if (Env::get('APP_DEBUG', 'false') === 'true') {
