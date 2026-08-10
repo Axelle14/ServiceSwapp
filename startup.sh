@@ -4,13 +4,18 @@ set -e
 
 echo "Starting ServiceSwap..."
 
-# Create a custom nginx configuration
-cat >/etc/nginx/sites-enabled/default <<'EOF'
-server {
-    listen 8080;
-    listen [::]:8080;
+# Azure provides the application port through PORT.
+: "${PORT:=8080}"
 
-    root /home/site/wwwroot;
+# Generate the Nginx configuration.
+# __PORT__ is replaced by the actual Azure port.
+# Nginx variables such as $uri and $query_string remain intact.
+sed "s/__PORT__/${PORT}/g" > /etc/nginx/sites-enabled/default <<'EOF'
+server {
+    listen __PORT__;
+    listen [::]:__PORT__;
+
+    root /home/site/wwwroot/public;
     index index.php index.html;
 
     server_name _;
@@ -21,24 +26,32 @@ server {
 
     location ~ \.php(/|$) {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
         fastcgi_pass 127.0.0.1:9000;
+
         include fastcgi_params;
 
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param QUERY_STRING $query_string;
         fastcgi_param PATH_INFO $fastcgi_path_info;
     }
 
-    location ~ /\.git {
+    location ~ /\. {
         deny all;
     }
 }
 EOF
 
-echo "Testing nginx configuration..."
+echo "Testing Nginx configuration..."
 nginx -t
 
-echo "Starting nginx..."
-service nginx reload || nginx -s reload
+echo "Starting/reloading Nginx..."
+
+if service nginx status >/dev/null 2>&1; then
+    service nginx reload
+else
+    nginx
+fi
 
 echo "Starting PHP-FPM..."
 exec php-fpm

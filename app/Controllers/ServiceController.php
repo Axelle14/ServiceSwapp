@@ -60,16 +60,39 @@ class ServiceController
           ->required('category')->in('category', $allowed)
           ->required('credits')->integer('credits')->range('credits', 1, 500);
 
+        $address = trim($_POST['location_address'] ?? '');
+        $latitude = trim($_POST['latitude'] ?? '');
+        $longitude = trim($_POST['longitude'] ?? '');
+
+        if ($address !== '') {
+            $v->max('location_address', 500);
+        }
+        if ($latitude !== '') {
+            $v->numeric('latitude')->between('latitude', -90, 90);
+        }
+        if ($longitude !== '') {
+            $v->numeric('longitude')->between('longitude', -180, 180);
+        }
+
+        if ($latitude !== '' || $longitude !== '') {
+            if ($address === '') {
+                $v->addError('location_address', 'Please select an address for the location.');
+            }
+        }
+
         if ($v->fails()) {
             $this->jsonError(array_values($v->errors())[0]);
             return;
         }
 
         $id = $this->services->create(Auth::id(), [
-            'title'       => $v->get('title'),
-            'description' => $v->get('description'),
-            'category'    => $v->get('category'),
-            'credits'     => (int)$v->get('credits'),
+            'title'            => $v->get('title'),
+            'description'      => $v->get('description'),
+            'category'         => $v->get('category'),
+            'credits'          => (int)$v->get('credits'),
+            'location_address' => $v->get('location_address', $address),
+            'latitude'         => $latitude,
+            'longitude'        => $longitude,
         ]);
 
         $this->jsonSuccess(['id' => $id, 'message' => 'Service listed successfully.']);
@@ -90,16 +113,39 @@ class ServiceController
           ->required('category')->in('category', $allowed)
           ->required('credits')->integer('credits')->range('credits', 1, 500);
 
+        $address = trim($_POST['location_address'] ?? '');
+        $latitude = trim($_POST['latitude'] ?? '');
+        $longitude = trim($_POST['longitude'] ?? '');
+
+        if ($address !== '') {
+            $v->max('location_address', 500);
+        }
+        if ($latitude !== '') {
+            $v->numeric('latitude')->between('latitude', -90, 90);
+        }
+        if ($longitude !== '') {
+            $v->numeric('longitude')->between('longitude', -180, 180);
+        }
+
+        if ($latitude !== '' || $longitude !== '') {
+            if ($address === '') {
+                $v->addError('location_address', 'Please select an address for the location.');
+            }
+        }
+
         if ($v->fails()) {
             $this->jsonError(array_values($v->errors())[0]);
             return;
         }
 
         $ok = $this->services->updateService((int)$params['id'], Auth::id(), [
-            'title'       => $v->get('title'),
-            'description' => $v->get('description'),
-            'category'    => $v->get('category'),
-            'credits'     => (int)$v->get('credits'),
+            'title'            => $v->get('title'),
+            'description'      => $v->get('description'),
+            'category'         => $v->get('category'),
+            'credits'          => (int)$v->get('credits'),
+            'location_address' => $v->get('location_address', $address),
+            'latitude'         => $latitude,
+            'longitude'        => $longitude,
         ]);
 
         $ok ? $this->jsonSuccess(['message' => 'Service updated.'])

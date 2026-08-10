@@ -40,6 +40,28 @@ $catIcons = ['Design'=>'🎨','Tech'=>'💻','Writing'=>'📝','Photography'=>'�
           <?= Validator::e($service['description']) ?>
         </div>
 
+        <?php if (!empty($service['latitude']) && !empty($service['longitude']) && !empty($service['location_address'])): ?>
+          <div class="service-location-card" style="margin-top:24px;padding:18px 20px;border:1px solid var(--beige);border-radius:18px;background:var(--white)">
+            <div style="font-size:13px;text-transform:uppercase;letter-spacing:1.3px;color:var(--caramel);margin-bottom:10px">Location</div>
+            <div style="font-size:15px;color:var(--charcoal);margin-bottom:16px">
+              <?= Validator::e($service['location_address']) ?>
+            </div>
+            <div id="serviceMap" class="service-map"></div>
+          </div>
+        <?php elseif (!empty($service['location_address'])): ?>
+          <div class="service-location-card" style="margin-top:24px;padding:18px 20px;border:1px solid var(--beige);border-radius:18px;background:var(--white)">
+            <div style="font-size:13px;text-transform:uppercase;letter-spacing:1.3px;color:var(--caramel);margin-bottom:10px">Location</div>
+            <div style="font-size:15px;color:var(--charcoal);margin-bottom:0">
+              <?= Validator::e($service['location_address']) ?>
+            </div>
+          </div>
+        <?php else: ?>
+          <div class="service-location-card" style="margin-top:24px;padding:18px 20px;border:1px solid var(--beige);border-radius:18px;background:var(--white)">
+            <div style="font-size:13px;text-transform:uppercase;letter-spacing:1.3px;color:var(--caramel);margin-bottom:10px">Location</div>
+            <div style="font-size:15px;color:var(--gray);">Location not provided</div>
+          </div>
+        <?php endif; ?>
+
         <?php if ($isOwner): ?>
           <div style="display:flex;gap:10px;margin-top:24px;padding-top:20px;border-top:1px solid var(--cream)">
             <button class="btn btn-outline btn-sm" onclick="openEditModal()">Edit Listing</button>
@@ -158,4 +180,23 @@ $catIcons = ['Design'=>'🎨','Tech'=>'💻','Writing'=>'📝','Photography'=>'�
 </div>
 <?php endif; ?>
 
+<?php
+$loadGoogleMaps = true;
+$serviceMapData = [
+    'lat'     => $service['latitude'] ?? null,
+    'lng'     => $service['longitude'] ?? null,
+    'address' => $service['location_address'] ?? null,
+];
+$serviceFormData = [
+    'id'               => (int)$service['id'],
+    'title'            => $service['title'],
+    'description'      => $service['description'],
+    'category'         => $service['category'],
+    'credits'          => (int)$service['credits'],
+    'location_address' => $service['location_address'] ?? '',
+    'latitude'         => $service['latitude'] ?? '',
+    'longitude'        => $service['longitude'] ?? '',
+];
+?>
+<?php require APP_ROOT . '/app/Views/partials/modal_add_service.php'; ?>
 <?php require APP_ROOT . '/app/Views/layouts/footer.php'; ?>

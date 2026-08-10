@@ -19,7 +19,7 @@ $currentCat = $category ?? '';
       <p class="section-sub"><?= number_format($total) ?> services available</p>
     </div>
     <?php if (Auth::check()): ?>
-      <button class="btn btn-primary" onclick="openModal('addService')">+ List a Service</button>
+      <button class="btn btn-primary" onclick="openCreateServiceModal()">+ List a Service</button>
     <?php else: ?>
       <a href="<?= APP_BASE ?>/register" class="btn btn-primary">Join to List</a>
     <?php endif; ?>
@@ -52,7 +52,7 @@ $currentCat = $category ?? '';
       <div class="empty-icon">🔎</div>
       <p>No services found<?= ($search ?? '') ? ' for "' . Validator::e($search) . '"' : '' ?>.</p>
       <?php if (Auth::check()): ?>
-        <button class="btn btn-primary" onclick="openModal('addService')">Be the first to list one</button>
+        <button class="btn btn-primary" onclick="openCreateServiceModal()">Be the first to list one</button>
       <?php endif; ?>
     </div>
   <?php else: ?>

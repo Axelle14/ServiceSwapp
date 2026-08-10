@@ -11,14 +11,17 @@ class ServiceModel extends BaseModel
     public function create(int $userId, array $data): int
     {
         return $this->insert([
-            'user_id'     => $userId,
-            'title'       => $data['title'],
-            'description' => $data['description'],
-            'category'    => $data['category'],
-            'credits'     => (int)$data['credits'],
-            'is_active'   => 1,
-            'created_at'  => date('Y-m-d H:i:s'),
-            'updated_at'  => date('Y-m-d H:i:s'),
+            'user_id'          => $userId,
+            'title'            => $data['title'],
+            'description'      => $data['description'],
+            'category'         => $data['category'],
+            'credits'          => (int)$data['credits'],
+            'location_address' => $data['location_address'] ?: null,
+            'latitude'         => $data['latitude'] !== '' ? $data['latitude'] : null,
+            'longitude'        => $data['longitude'] !== '' ? $data['longitude'] : null,
+            'is_active'        => 1,
+            'created_at'       => date('Y-m-d H:i:s'),
+            'updated_at'       => date('Y-m-d H:i:s'),
         ]);
     }
 
@@ -26,7 +29,7 @@ class ServiceModel extends BaseModel
     {
         // Ensure owner can only edit their own listing
         $stmt = $this->db->prepare(
-            'UPDATE services SET title=?, description=?, category=?, credits=?, updated_at=NOW()
+            'UPDATE services SET title=?, description=?, category=?, credits=?, location_address=?, latitude=?, longitude=?, updated_at=NOW()
              WHERE id=? AND user_id=?'
         );
         $stmt->execute([
@@ -34,6 +37,9 @@ class ServiceModel extends BaseModel
             $data['description'],
             $data['category'],
             (int)$data['credits'],
+            $data['location_address'] ?: null,
+            $data['latitude'] !== '' ? $data['latitude'] : null,
+            $data['longitude'] !== '' ? $data['longitude'] : null,
             $serviceId,
             $userId,
         ]);

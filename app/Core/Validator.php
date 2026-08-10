@@ -62,6 +62,14 @@ class Validator
         return $this;
     }
 
+    public function numeric(string $field): static
+    {
+        if (!empty($this->data[$field]) && !is_numeric($this->data[$field])) {
+            $this->errors[$field] = 'Must be a valid number.';
+        }
+        return $this;
+    }
+
     public function range(string $field, int $min, int $max): static
     {
         $val = (int)($this->data[$field] ?? 0);
@@ -71,10 +79,30 @@ class Validator
         return $this;
     }
 
+    public function between(string $field, float $min, float $max): static
+    {
+        if ($this->data[$field] === '' || $this->data[$field] === null) {
+            return $this;
+        }
+
+        if (!is_numeric($this->data[$field]) || (float)$this->data[$field] < $min || (float)$this->data[$field] > $max) {
+            $this->errors[$field] = "Must be between {$min} and {$max}.";
+        }
+        return $this;
+    }
+
     public function in(string $field, array $allowed): static
     {
         if (!empty($this->data[$field]) && !in_array($this->data[$field], $allowed, true)) {
             $this->errors[$field] = 'Invalid value selected.';
+        }
+        return $this;
+    }
+
+    public function addError(string $field, string $message): static
+    {
+        if (empty($this->errors[$field])) {
+            $this->errors[$field] = $message;
         }
         return $this;
     }

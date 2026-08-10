@@ -17,7 +17,7 @@ $categories = ['Design','Tech','Writing','Photography','Tutoring','Home Services
       <h1 class="section-title">Your <em>Dashboard</em></h1>
       <p class="section-sub">Welcome back, <?= Validator::e($user['full_name']) ?></p>
     </div>
-    <button class="btn btn-primary" onclick="openModal('addService')">+ List a Service</button>
+    <button class="btn btn-primary" onclick="openCreateServiceModal()">+ List a Service</button>
   </div>
 
   <div class="dash-grid">
@@ -108,12 +108,12 @@ $categories = ['Design','Tech','Writing','Photography','Tutoring','Home Services
       <div class="card">
         <div class="flex-between" style="margin-bottom:16px">
           <h2 class="card-title" style="margin-bottom:0">My Listings</h2>
-          <button class="btn btn-outline btn-sm" onclick="openModal('addService')">+ Add</button>
+          <button class="btn btn-outline btn-sm" onclick="openCreateServiceModal()">+ Add</button>
         </div>
 
         <?php if (empty($myServices)): ?>
           <div class="empty-state" style="padding:24px 0">
-            <p>No listings yet. <button class="btn btn-primary btn-sm" onclick="openModal('addService')">Create your first</button></p>
+            <p>No listings yet. <button class="btn btn-primary btn-sm" onclick="openCreateServiceModal()">Create your first</button></p>
           </div>
         <?php else: ?>
           <?php foreach ($myServices as $svc): ?>

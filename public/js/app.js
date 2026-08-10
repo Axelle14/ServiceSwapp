@@ -166,7 +166,7 @@ async function submitService(e) {
 
   btn.disabled = true; btn.textContent = 'Saving…';
   const res = await api(url, data);
-  btn.disabled = false; btn.textContent = 'Publish';
+  btn.disabled = false; btn.textContent = editId ? 'Save changes' : 'Publish Listing';
 
   if (res.success) {
     closeModal('addService');
@@ -175,6 +175,68 @@ async function submitService(e) {
   } else {
     showToast(res.error || 'Could not save service.', 'error');
   }
+}
+
+function resetServiceForm() {
+  const form = document.getElementById('serviceForm');
+  if (!form) return;
+  form.removeAttribute('data-edit-id');
+  form.querySelector('[name="title"]').value = '';
+  form.querySelector('[name="description"]').value = '';
+  form.querySelector('[name="credits"]').value = '';
+  form.querySelector('[name="category"]').selectedIndex = 0;
+  form.querySelector('[name="location_address"]').value = '';
+  form.querySelector('[name="latitude"]').value = '';
+  form.querySelector('[name="longitude"]').value = '';
+  const title = form.querySelector('.modal-title');
+  if (title) title.textContent = 'List a Service';
+  const btn = form.querySelector('[type="submit"]');
+  if (btn) btn.textContent = 'Publish Listing';
+  setLocationNotice('');
+}
+
+function openCreateServiceModal() {
+  resetServiceForm();
+  openModal('addService');
+  if (window.google?.maps) {
+    initLocationAutocomplete();
+  }
+}
+
+function openEditModal() {
+  const form = document.getElementById('serviceForm');
+  if (!form || !window.serviceFormData) return;
+
+  form.dataset.editId = window.serviceFormData.id || '';
+  form.querySelector('[name="title"]').value = window.serviceFormData.title || '';
+  form.querySelector('[name="description"]').value = window.serviceFormData.description || '';
+  form.querySelector('[name="credits"]').value = window.serviceFormData.credits || '';
+  form.querySelector('[name="category"]').value = window.serviceFormData.category || '';
+  form.querySelector('[name="location_address"]').value = window.serviceFormData.location_address || '';
+  form.querySelector('[name="latitude"]').value = window.serviceFormData.latitude || '';
+  form.querySelector('[name="longitude"]').value = window.serviceFormData.longitude || '';
+
+  const title = form.querySelector('.modal-title');
+  if (title) title.textContent = 'Edit Service';
+  const btn = form.querySelector('[type="submit"]');
+  if (btn) btn.textContent = 'Save changes';
+
+  openModal('addService');
+  if (window.google?.maps) {
+    initLocationAutocomplete();
+  }
+}
+
+function setLocationNotice(message) {
+  const notice = document.getElementById('locationNotice');
+  if (!notice) return;
+  if (!message) {
+    notice.style.display = 'none';
+    notice.textContent = '';
+    return;
+  }
+  notice.style.display = 'block';
+  notice.textContent = message;
 }
 
 /* ── Delete service ───────────────────────────────────────── */
