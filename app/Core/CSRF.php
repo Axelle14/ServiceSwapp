@@ -33,21 +33,20 @@ class CSRF
      * Verify a submitted token. Throws on failure.
      */
     public static function verify(string $token): void
-    {
-        self::ensureSession();
+{
+    self::ensureSession();
 
-        if (
-            empty($_SESSION[self::TOKEN_KEY]) ||
-            !hash_equals($_SESSION[self::TOKEN_KEY], $token) ||
-            self::isExpired()
-        ) {
-            http_response_code(403);
-            throw new \RuntimeException('Invalid or expired CSRF token.');
-        }
-
-        // Rotate after successful use (token-per-request)
-        self::rotate();
+    if (
+        empty($_SESSION[self::TOKEN_KEY]) ||
+        !hash_equals($_SESSION[self::TOKEN_KEY], $token) ||
+        self::isExpired()
+    ) {
+        http_response_code(403);
+        throw new \RuntimeException('Invalid or expired CSRF token.');
     }
+
+    // Keep the token valid until it expires.
+}
 
     /** Render a hidden input field. */
     public static function field(): string
